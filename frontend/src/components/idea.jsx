@@ -8,7 +8,6 @@ import '../stylesheets/idea.css';
 
 //sponsor button not needed only the champion button sponsor button is needed for the proposals 
 // import SponsorModal from './sponsorModal.jsx';
-import ChampionModal from './championModal.jsx';
 import ReportModal from './report.jsx';
 
 const API_URL = require('../config.js')
@@ -78,7 +77,17 @@ class Idea extends Component {
         this.setState({ posCount: json.positiveCount })
         this.setState({ negCount: json.negativeCount })
         this.setState({ ratio: json.rating.ratio })
-        this.proposal();
+        var requiredRatio = this.state.idea.ratio;
+        var ratio = this.state.ratio;
+        var interactivity = this.state.interactivity;
+        var champ = document.getElementById('champ');
+        var state = this.state.idea.state;
+    
+        if (ratio >= requiredRatio && interactivity >= 5 && state === 'idea') {
+          champ.hidden = false;
+        } else {
+          champ.hidden = true;
+        }
       })
       .catch(error => {
         console.log("Error: " + error);
@@ -98,18 +107,34 @@ class Idea extends Component {
       });
   }
 
-  proposal() {
-    var requiredRatio = this.state.idea.ratio;
-    var ratio = this.state.ratio;
-    var interactivity = this.state.interactivity;
-    var champ = document.getElementById('champ');
-    var state = this.state.idea.state;
-
-    if (ratio >= requiredRatio && interactivity >= 5 && state === 'idea') {
-      champ.hidden = false;
-    } else {
-      champ.hidden = true;
-    }
+  async proposal(e) {
+    e.preventDefault();
+    try{
+    let data = JSON.stringify({
+        ideas: {
+            state: 'proposal'
+        }
+    });
+         await fetch(API_URL + "/proposal/" + this.props.match.params.id, { 
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: data,
+            credentials: 'include'
+            })
+            .then(response => {
+            if (response.ok){
+                console.log(response);
+                window.location.reload();
+            }
+            })
+            .catch(error => {
+            throw error
+        });
+        } catch(e) {
+            console.log(e.stack)
+        }
   }
 
 
@@ -299,9 +324,14 @@ class Idea extends Component {
                 </div>               
                 <div className="row">
                   <div className="col-12 mt-5">
+
+
+                    <form onSubmit={(e) => this.proposal(e)}>
                     <div id="champ">
-                      <button type="button" className="btn btn-warning" data-toggle="modal" data-target="#championModal">Promote Idea</button>
+                      <button id="submitBtn" type="submit" className="btn btn-warning" data-toggle="modal" data-target="#championModal">Promote Idea</button>
                     </div>
+                    </form>
+
                     <br />
                     <h5>Share</h5>
                     <a className="resp-sharing-button__link" href={"https://facebook.com/sharer/sharer.php?u=http%3A%2F%2F" + shareURL} target="_blank" rel="noopener noreferrer" aria-label="">
@@ -576,7 +606,6 @@ class Idea extends Component {
             </div>
           </div>
         </div>
-        <ChampionModal />
         <ReportModal/>
       </div>
     );
