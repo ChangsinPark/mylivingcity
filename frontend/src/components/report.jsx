@@ -18,10 +18,29 @@ class ReportModal extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    report(e) {
+   async report(e) {
         e.preventDefault();
-        console.log(this.state);
-        window.location.reload();
+        try{
+        let data = JSON.stringify({
+            email: this.state.email,
+            reason: this.state.reason
+        });
+        let response = await fetch(API_URL + '/report', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: data
+        });
+        if(response.ok){
+            console.log("The form successfully reported.")
+        }
+        else{
+            console.log("The report submitted failed.")
+        }
+    }catch(e){
+        console.log(e.stack)
+    }
+    console.log(this.state);
+    window.location.reload();
     }
 
     render() {

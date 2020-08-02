@@ -8,7 +8,7 @@ var migrationCommands = [
     {
         fn: "createTable",
         params: [
-            "Report",
+            "Reports",
             {
                 "id": {
                     "type": Sequelize.INTEGER,
@@ -35,7 +35,7 @@ var undoMigrationCommands = [
     {
         fn: "dropTable",
         params: [
-            "Report"
+            "Reports"
         ]
     }
 ];
