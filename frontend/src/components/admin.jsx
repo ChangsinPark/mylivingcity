@@ -10,16 +10,19 @@ class Admin extends Component {
         this.state = {
             users: [],
             ideas: [],
+            reports: [],
             ratios: {}
         };
         this.getUsers = this.getUsers.bind(this);
         this.getIdeas = this.getIdeas.bind(this);
+        this.getReport = this.getReport.bind(this);
         this.changeHandler = this.changeHandler.bind(this);
     }
 
     componentDidMount() {
         this.getUsers();
         this.getIdeas();
+        this.getReport();
     }
 
     async getUsers() {
@@ -64,6 +67,26 @@ class Admin extends Component {
             })
         }
         catch(e) {
+            console.log(e.stack);
+        }
+    }
+
+    async getReport(){
+        try{
+            await fetch(API_URL + '/reports', {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+                credentials: 'include'
+            }).then((response) => {
+                response.json()
+                .then((json) => {
+                    console.log(json);
+                    this.setState({reports: json});
+                })
+            }).catch((error) => {
+                throw error
+            })
+        } catch(e){
             console.log(e.stack);
         }
     }
@@ -165,6 +188,26 @@ class Admin extends Component {
                                         <td>{value.idea.User.fname} {value.idea.User.lname}</td>
                                     </tr>
                                 })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="table-responsive">Reports
+                        <table className="table table-striped table-bordered table-hover mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Email</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.reports.map((value, index) => {
+                                    return <tr key={index}>
+                                        <td>{value.report.id}</td>
+                                        <td>{value.report.email}</td>
+                                        <td>{value.report.reason}</td>
+                                    </tr>
+                                },)}
                             </tbody>
                         </table>
                     </div>

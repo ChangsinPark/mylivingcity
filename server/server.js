@@ -60,6 +60,7 @@ const userController = require('./controllers/user');
 const blogController = require('./controllers/blog');
 const commentController = require('./controllers/comment');
 const imageController = require('./controllers/image');
+const reportController = require('./controllers/report');
 
 app.get('/', auth.optional, (req, res) => res.send('Welcome to My Living City!'));
 
@@ -104,5 +105,8 @@ app.delete('/blog/:id', validateLogin, blogController.deleteBlog);
 app.get('/image/:filename', imageController.getImage);
 app.get('/:type/:id/images', imageController.getImageUrls);
 app.post('/:type/:id/images', validateLogin, multer.array('file'), imageController.postImage);
+
+app.post('/report', bodyParser.json(), reportController.postReport);
+app.get('/reports', bodyParser.json(), reportController.getReport);
 
 app.listen(port, () => console.log(`My Living City listening on port ${port}!`));
