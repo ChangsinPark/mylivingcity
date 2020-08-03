@@ -89,6 +89,7 @@ class Navbar extends Component {
                 {this.state.user}
               </button>
               <div className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a className="dropdown-item" id="profileLink" href="/user/me" role="button">Profile</a>
                 <div style={{"cursor": "pointer"}}className="dropdown-item" onClick={() => this.logout()}>Logout</div>
               </div>
             </div>
