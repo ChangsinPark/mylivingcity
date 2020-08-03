@@ -40,12 +40,14 @@ async login(e){
           console.log('Got User: ', data);
           sessionStorage.setItem('loggedin', true);
           sessionStorage.setItem('user', data.user.email);
+          sessionStorage.setItem('userId', data.user.id);
           sessionStorage.setItem('userRole', data.user.RoleId);
           this.acceptLogin();
         }).catch(e => {
           console.log(e.stack);
           sessionStorage.setItem('loggedin', false);
           sessionStorage.setItem('user', data.user.email);
+          sessionStorage.setItem('userId', data.user.id);
           sessionStorage.setItem('userRole', data.user.RoleId);
           this.rejectLogin();
         });

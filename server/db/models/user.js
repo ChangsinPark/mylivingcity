@@ -68,6 +68,26 @@ module.exports = (sequelize, DataTypes) => {
     });
   });    
 
+  User.beforeBulkUpdate((user, options) => {
+    return cryptPassword(user.password)
+    .then(success => {
+        user.password = success;
+    })
+    .catch(err => {
+        if (err) console.log(err);
+    });
+  });
+
+  User.beforeUpdate((user, options) => {
+    return cryptPassword(user.password)
+    .then(success => {
+        user.password = success;
+    })
+    .catch(err => {
+        if (err) console.log(err);
+    });
+  });
+
   function cryptPassword(password) {
     return new Promise(function(resolve, reject) {
         bcrypt.hash(password, 10, function(err, hash) {

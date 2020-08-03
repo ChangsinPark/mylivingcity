@@ -101,15 +101,23 @@ const logout = (req, res, next) => {
 
 //GET current route (required, only authenticated users have access)
 const getCurrentUser = (req, res, next) => {
-  const { payload: { id } } = req;
+  const id = req.session.user.id;
 
-  return User.findByPk(id)
+  return User.findOne({
+    include: [{
+      model: Role,
+      attributes: [
+        ['role_name', 'role_name']
+      ]
+    }],
+    where: {id: id}
+  })
     .then((user) => {
       if(!user) {
         return res.sendStatus(400);
       }
 
-      return res.json({ user: user.toAuthJSON() });
+      return res.json({ user: user });
     });
 };
 
@@ -159,11 +167,47 @@ const getUsers = async function(req, res) {
   }
 }
 
+// PUT change password route
+const changePassword = async function(req, res) {
+  console.log("changing password....")
+  console.log(req.session.user.id)
+  console.log(req.body)
+  const id = req.session.user.id
+  const newPassword = req.body.password
+
+  console.log("updating");
+  try {
+    await User.update({
+      password: newPassword
+    }, {
+      where: {
+        id: id
+      },
+      individualHooks: true
+    }).catch((err) => {
+      throw err;
+    });
+
+    console.log("updated");
+    const user = await User.findByPk(id);
+    console.log(user);
+    req.session.user = user;
+    res.status(200).end();
+  } catch(e) {
+    return res.status(400).json({
+      errors: {
+        error: e.stack
+      },
+    });
+  }
+}
+
 module.exports = {
   register,
   login,
   logout,
   getCurrentUser,
   getRoles,
-  getUsers
+  getUsers,
+  changePassword
 };

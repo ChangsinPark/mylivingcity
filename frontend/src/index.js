@@ -16,6 +16,7 @@ import BlogAdmin from './components/blogAdmin.jsx';
 import ViewBlog from './components/viewBlog.jsx';
 import Admin from './components/admin.jsx';
 import Category from './components/category.jsx';
+import UserProfile from './components/userProfile.jsx';
 
 const routing = (
     <Router>
@@ -32,6 +33,7 @@ const routing = (
 
         <Route path="/blog/:id" component={ViewBlog}/>
         <Route path="/admin" component={Admin}/>
+        <Route path="/user/me" component={UserProfile}/>
       </div>
     </Router>
   )

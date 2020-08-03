@@ -93,6 +93,7 @@ app.post('/user/logout', validateLogin, userController.logout);
 app.get('/user/me', validateLogin, userController.getCurrentUser);
 app.get('/roles', userController.getRoles);
 app.get('/users', userController.getUsers);
+app.put('/user/password', validateLogin, bodyParser.json(), userController.changePassword);
 
 app.get('/blogs', blogController.getBlogs);
 app.get('/blog/:id', blogController.getBlog);
