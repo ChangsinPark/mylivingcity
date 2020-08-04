@@ -173,26 +173,35 @@ const changePassword = async function(req, res) {
   console.log(req.session.user.id)
   console.log(req.body)
   const id = req.session.user.id
-  const newPassword = req.body.password
+  const currentPassword = req.body.currentPassword
+  const newPassword = req.body.newPassword
 
-  console.log("updating");
   try {
-    await User.update({
-      password: newPassword
-    }, {
-      where: {
-        id: id
-      },
-      individualHooks: true
-    }).catch((err) => {
-      throw err;
-    });
+    const valid = await User.findByPk(id).then((user) => {
+      console.log("found user")
+      return user.validatePassword(currentPassword)
+    })
+    if (valid) {
+      console.log("updating");
+      await User.update({
+        password: newPassword
+      }, {
+        where: {
+          id: id
+        },
+        individualHooks: true
+      }).catch((err) => {
+        throw err;
+      });
 
-    console.log("updated");
-    const user = await User.findByPk(id);
-    console.log(user);
-    req.session.user = user;
-    res.status(200).end();
+      console.log("updated");
+      const user = await User.findByPk(id);
+      console.log(user);
+      req.session.user = user;
+      res.status(200).end();
+    } else {
+      return res.status(500).send({error: "Incorrect password"})
+    }
   } catch(e) {
     return res.status(400).json({
       errors: {

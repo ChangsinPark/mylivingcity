@@ -22,14 +22,16 @@ class PasswordModal extends Component {
     async submit(e) {
         e.preventDefault();
         console.log(this.state);
+        var errorMessage;
         if (!this.state.newPassword.match(this.state.confirmPassword)) {
-            const errorMessage = <p>Confirmation doesn't match new password</p>;
+            errorMessage = <p>Confirmation doesn't match new password</p>;
             ReactDOM.render(errorMessage, document.getElementById('passwordError'));
             return false;
         }
         try {
             let data = JSON.stringify({
-                password: this.state.newPassword
+                currentPassword: this.state.currentPassword,
+                newPassword: this.state.newPassword
             });
             await fetch(API_URL + "/user/password", {
                 method: "PUT",
@@ -38,9 +40,16 @@ class PasswordModal extends Component {
                 credentials: 'include'
             }).then((response) => {
                 if (response.ok) {
+                    errorMessage = <p></p>;
+                    ReactDOM.render(errorMessage, document.getElementById('passwordError'));
                     this.acceptSubmit();
                 } else {
-                    this.rejectSubmit();
+                    response.json()
+                    .then((json) => {
+                        errorMessage = <p>{json.error}</p>;
+                        ReactDOM.render(errorMessage, document.getElementById('passwordError'));
+                        this.rejectSubmit();
+                    })
                 }
             }).catch((err) => {
                 throw err;
