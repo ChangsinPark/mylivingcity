@@ -36,7 +36,8 @@ class Idea extends Component {
       ratio: 0,
       posRating: 0,
       negRating: 0,
-      rating: 0
+      rating: 0,
+      userDidRate: false
     };
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,6 +73,8 @@ class Idea extends Component {
         this.setState({ averageRating: parseFloat(json.rating.totalAverage) || 0 })
         this.setState({ posAvgRating: parseFloat(json.rating.positiveAverage) || 0 })
         this.setState({ negAvgRating: Math.abs(parseFloat(json.rating.negativeAverage)) || 0 })
+        this.setState({ rating: parseFloat(json.rating.userRating) || 0 })
+        this.setState({ userDidRate: json.rating.userDidRate })
         this.setState({ votes: json.rating.votes })
         this.setState({ interactivity: json.rating.interactivity })
         this.setState({ posCount: json.positiveCount })
@@ -213,37 +216,29 @@ class Idea extends Component {
       });
   }
 
-  addRating(e) {
+  async addRating(e) {
     e.preventDefault();
-    var data = 0;
-    if (this.state.rating > 0 && this.state.rating <= 10) {
-      //checks if the rating is the negative rating
-      if (this.state.rating > 0 && this.state.rating < 5) {
-        data = JSON.stringify({
-          rating: this.state.rating
-        })
-      }
-      //checks if the rating is the positive rating
-      else if (this.state.rating < 10 && this.state.rating >= 5) {
-        data = JSON.stringify({
-          rating: this.state.rating
-        })
-      }
+    try {
+      const data = JSON.stringify({
+        rating: this.state.rating
+      });
 
-      fetch(API_URL + "/idea/" + this.props.match.params.id + '/rate', {
+      await fetch(API_URL + "/idea/" + this.props.match.params.id + '/rate', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: data,
         credentials: 'include'
       })
-        .then(res => {
+      .then(res => {
+        if (res.ok) {
           window.location.reload();
-        })
-        .catch(error => {
-          console.log("Error: " + error);
-        });
-    } else {
-      console.log("Must provide a valid rating");
+        }
+      })
+      .catch(error => {
+        throw error;
+      });
+    } catch(e) {
+      console.log(e.stack);
     }
   }
 
@@ -449,7 +444,7 @@ class Idea extends Component {
                 <div className="d-flex justify-content-center">
                   <Ratings
                     rating={this.state.rating}
-                    changeRating={this.changeRating}
+                    changeRating={this.state.userDidRate ? ()=>{} : this.changeRating}
                     widgetRatedColors={this.state.rating >= 6 ? "green" : "red"}
                     widgetEmptyColors="grey"
                     widgetHoverColors="gold"
@@ -467,7 +462,7 @@ class Idea extends Component {
                   </Ratings>
                 </div>
                 <div className="d-flex justify-content-center">
-                  <button onClick={(e) => this.addRating(e)} type="button" className="btn btn-light">Submit Rating</button>
+                  <button onClick={(e) => this.addRating(e)} type="button" className="btn btn-light" disabled={this.state.userDidRate}>Submit Rating</button>
                 </div>
 
               </div>

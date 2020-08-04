@@ -32,7 +32,7 @@ const getIdeasByCategory = async function(req, res) {
       }).catch((err) => {
         throw err;
       });
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       res.send(ideas);
     } else if (req.params.category === 'Community' && req.params.sort === 'new'){
         var dbIdeas = await Idea.findAll({
@@ -56,7 +56,7 @@ const getIdeasByCategory = async function(req, res) {
         }).catch((err) => {
           throw err;
         });
-        var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+        var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
         res.send(ideas);      
     } else if (req.params.category === 'Arts' && req.params.sort === 'new'){
       var dbIdeas = await Idea.findAll({
@@ -80,7 +80,7 @@ const getIdeasByCategory = async function(req, res) {
       }).catch((err) => {
         throw err;
       });
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       res.send(ideas);      
     } else if(req.params.category === 'Energy' && req.params.sort === 'new'){
       var dbIdeas = await Idea.findAll({
@@ -104,7 +104,7 @@ const getIdeasByCategory = async function(req, res) {
       }).catch((err) => {
         throw err;
       });
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       res.send(ideas);
     } else if(req.params.category === 'Manufacturing' && req.params.sort === 'new'){
       var dbIdeas = await Idea.findAll({
@@ -128,7 +128,7 @@ const getIdeasByCategory = async function(req, res) {
       }).catch((err) => {
         throw err;
       });
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       res.send(ideas);  
     } else if(req.params.category === 'Nature' && req.params.sort === 'trending'){
       var dbIdeas = await Idea.findAll({
@@ -150,7 +150,7 @@ const getIdeasByCategory = async function(req, res) {
         limit: 50,
         order: [['createdAt', 'DESC']]
       }).catch((err) => {throw err;});
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       ideas.sort((a,b) => {
         if (a.positiveCount - a.negativeCount > b.positiveCount - b.negativeCount) {
           return 1;
@@ -181,7 +181,7 @@ const getIdeasByCategory = async function(req, res) {
         limit: 50,
         order: [['createdAt', 'DESC']]
       }).catch((err) => {throw err;});
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       ideas.sort((a,b) => {
         if (a.positiveCount - a.negativeCount > b.positiveCount - b.negativeCount) {
           return 1;
@@ -212,7 +212,7 @@ const getIdeasByCategory = async function(req, res) {
         limit: 50,
         order: [['createdAt', 'DESC']]
       }).catch((err) => {throw err;});
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       ideas.sort((a,b) => {
         if (a.positiveCount - a.negativeCount > b.positiveCount - b.negativeCount) {
           return 1;
@@ -243,7 +243,7 @@ const getIdeasByCategory = async function(req, res) {
         limit: 50,
         order: [['createdAt', 'DESC']]
       }).catch((err) => {throw err;});
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       ideas.sort((a,b) => {
         if (a.positiveCount - a.negativeCount > b.positiveCount - b.negativeCount) {
           return 1;
@@ -274,7 +274,7 @@ const getIdeasByCategory = async function(req, res) {
         limit: 50,
         order: [['createdAt', 'DESC']]
       }).catch((err) => {throw err;});
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       ideas.sort((a,b) => {
         if (a.positiveCount - a.negativeCount > b.positiveCount - b.negativeCount) {
           return 1;
@@ -321,7 +321,7 @@ const getIdeas = async function (req, res) {
         limit: 50,
         order: [['createdAt', 'DESC']]
       }).catch((err) => {throw err;});
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       res.send(ideas);
     } else if (req.params.sort === 'trending') {
      var dbIdeas = await Idea.findAll({
@@ -343,7 +343,7 @@ const getIdeas = async function (req, res) {
         limit: 50,
         order: [['createdAt', 'DESC']]
       }).catch((err) => {throw err;});
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       ideas.sort((a,b) => {
         return a.rating.totalAverage - b.rating.totalAverage;
         /*
@@ -383,7 +383,7 @@ const getIdeas = async function (req, res) {
         delete idea.developer_lname;
         return idea;
       });
-      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(idea))) 
+      var ideas = await Promise.all(dbIdeas.map(idea => addVotes(req.session, idea))) 
       res.send(ideas);
     } else {
       throw "invalid sort method";
@@ -398,7 +398,7 @@ const getIdeas = async function (req, res) {
 }
 
 // Adds votes to an idea object
-const addVotes = async idea => {
+const addVotes = async (session, idea) => {
   // var upvoteCount = await Vote.count({ where: {'up': true, 'IdeaId': idea.id} });
 
   // var downvoteCount = await Vote.count({ where: {'down': true, 'IdeaId': idea.id} });
@@ -548,13 +548,47 @@ const addVotes = async idea => {
     ratio = 0;
   }
 
+  var userDidRate = false
+  if (session.user) {
+    userDidRate = await Rating.findOne({
+      where: {
+        'IdeaId': idea.id,
+        'UserId': session.user.id
+      }
+    }).then((success) => {
+      if (success) {
+        return true
+      } else {
+        return false
+      }
+    })
+  }
+
+  var userRating = 0
+  if (userDidRate) {
+    userRating = await Rating.findOne({
+      where: {
+        'IdeaId': idea.id,
+        'UserId': session.user.id
+      }
+    }).then((success) => {
+      if (success) {
+        return success.rating
+      } else {
+        return 0
+      }
+    })
+  }
+
   var rating = {
     totalAverage: averageRating,
     positiveAverage: posAverageRating,
     negativeAverage: negAverageRating,
     votes: votes,
     interactivity: interactivity,
-    ratio: ratio
+    ratio: ratio,
+    userDidRate: userDidRate,
+    userRating: userRating
   };
 
   return await {
@@ -606,7 +640,7 @@ const getSingleIdea = async function(req, res) {
     }).catch(err => {throw err;});
     // var upvoteCount = await Vote.count({ where: {'up': true, 'IdeaId': req.params.id} });
     // var downvoteCount = await Vote.count({ where: {'down': true, 'IdeaId': req.params.id} });
-    var idea = await addVotes(dbIdea) 
+    var idea = await addVotes(req.session, dbIdea) 
     res.send(idea);
   } catch (e) {
     return res.status(500).json({
@@ -814,20 +848,11 @@ const rate = async function (req, res) {
       });
     } else {
       console.log(req.body.rating);
-      //adding the rating body to the correct row
-      if (req.body.rating > 0 && req.body.rating < 5) {
-        Rating.create({
-          UserId: req.session.user.id,
-          IdeaId: req.params.id,
-          negRating: req.body.rating,
-        }).catch((err) => {throw err;});
-      } else if (req.body.rating >= 5 && req.body.rating < 10) {
-        Rating.create({
-          UserId: req.session.user.id,
-          IdeaId: req.params.id,
-          posRating: req.body.rating,
-        }).catch((err) => {throw err;});
-      }
+      Rating.create({
+        UserId: req.session.user.id,
+        IdeaId: req.params.id,
+        rating: req.body.rating,
+      }).catch((err) => {throw err;});
       res.status(200).end();
     }
   } catch(e) {
