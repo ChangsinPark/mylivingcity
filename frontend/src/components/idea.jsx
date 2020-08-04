@@ -85,8 +85,9 @@ class Idea extends Component {
         var interactivity = this.state.interactivity;
         var champ = document.getElementById('champ');
         var state = this.state.idea.state;
+        var status = this.state.idea.status;
     
-        if (ratio >= requiredRatio && interactivity >= 5 && state === 'idea') {
+        if (state === 'idea' && status === 'pending') {
           champ.hidden = false;
         } else {
           champ.hidden = true;

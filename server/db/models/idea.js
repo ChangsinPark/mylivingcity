@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    ratio: DataTypes.FLOAT
+    ratio: DataTypes.FLOAT,
+    status: DataTypes.STRING
   }, {});
 
   Idea.associate = function(models) {
