@@ -43,7 +43,6 @@ const register = (req, res, next) => {
 //POST login route (optional, everyone has access)
 const login = (req, res, next) => {
   const { body: { user } } = req;
-
   if(!user.email) {
     return res.status(422).json({
       errors: {
@@ -51,7 +50,6 @@ const login = (req, res, next) => {
       },
     });
   }
-
   if(!user.password) {
     return res.status(422).json({
       errors: {
@@ -59,14 +57,13 @@ const login = (req, res, next) => {
       },
     });
   }
-
   return passport.authenticate('local', { session: true }, (err, passportUser, info) => {
     /*******DEBUG*********/
     console.log("Authenticating...");
     /********************/
 
     if(err) {
-      return next(err);
+      return res.status(400).send(err);
     }
 
     if(passportUser) {

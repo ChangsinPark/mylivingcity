@@ -100,7 +100,7 @@ async login(e){
                     <button id="submitBtn" type="submit" className="btn btn-primary">Login</button>
                     <div>
                       <i id="confirmIcon" hidden className="fas fa-check fa-2x"></i>
-                      <i id="denyIcon" hidden className="far fa-times-circle fa-2x"></i>
+                      <i id="denyIcon" hidden className="far fa-times-circle fa-2x">Wrong password.</i>
                     </div>
                   </div>
                 </form>

@@ -718,7 +718,7 @@ const upvote = async function (req, res) {
 
       if (positiveCount + negativeCount >= 50) {
         if (negativeCount == 0) { negativeCount = 1; } // avoid divide by zero
-        if ((positiveCount/negativeCount * 100) >= 70) {
+        if ((positiveCount/negativeCount * 100) >= 50) {
           Idea.update({state: 'proposal'}, { where: {id: req.params.id}}).catch((err) => {throw err;});
         }
       }//else if upvote over 100 => update state: collaborations
