@@ -83,17 +83,16 @@ const addVotes = async comment => {
     raw: true
   }).then((success) => {
     var queryVotes = {
+      "10": "0",
+      "9": "0",
+      "8": "0",
+      "7": "0",
+      "6": "0",
       "5": "0",
       "4": "0",
       "3": "0",
       "2": "0",
-      "1": "0",
-      "0": "0",
-      "-1": "0",
-      "-2": "0",
-      "-3": "0",
-      "-4": "0",
-      "-5": "0",
+      "1": "0"
     };
     success.map((value, id) => {
       queryVotes[value.rating] = value.count;
@@ -101,7 +100,7 @@ const addVotes = async comment => {
     var isPositive = 0;
     var isNegative = 0;
     for (i = 0; i < queryVotes.count; i++) {
-      if (queryVotes[i] > 0) {
+      if (queryVotes[i] > 5) {
         isPositive++;
       } else {
         isNegative++;

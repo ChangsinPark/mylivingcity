@@ -24,10 +24,13 @@ module.exports = {
       raw: true
     });
 
+    let min = 1;
+    let max = 10;
+
     for (let ideaIndex = 0; ideaIndex < ideaIds.length; ideaIndex++) {
       for (let userIndex = 0; userIndex < userIds.length; userIndex++) {
         testRatings.push({
-          "rating": Math.floor(Math.random() * (5 - (-5) + 1) + (-5) ),
+          "rating": Math.floor(Math.random() * (max - (min) + 1) + (min) ),
           "UserId": userIds[userIndex].id,
           "IdeaId": ideaIds[ideaIndex].id,
           "createdAt": new Date(),

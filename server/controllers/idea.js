@@ -425,17 +425,16 @@ const addRatings = async (session, idea) => {
     raw: true
   }).then((success) => {
     var queryVotes = {
+      "10": "0",
+      "9": "0",
+      "8": "0",
+      "7": "0",
+      "6": "0",
       "5": "0",
       "4": "0",
       "3": "0",
       "2": "0",
-      "1": "0",
-      "0": "0",
-      "-1": "0",
-      "-2": "0",
-      "-3": "0",
-      "-4": "0",
-      "-5": "0",
+      "1": "0"
     };
     success.map((value, id) => {
       queryVotes[value.rating] = value.count;
@@ -451,7 +450,7 @@ const addRatings = async (session, idea) => {
     where: {
       'IdeaId': idea.id,
       'rating': {
-        [Op.gt]: 0
+        [Op.gt]: 5
       }
     },
     raw: true
@@ -471,7 +470,7 @@ const addRatings = async (session, idea) => {
     where: {
       'IdeaId': idea.id,
       'rating': {
-        [Op.lt]: 0
+        [Op.lt]: 6
       }
     },
     raw: true
@@ -489,7 +488,7 @@ const addRatings = async (session, idea) => {
     where: {
       'IdeaId': idea.id,
       'rating': {
-        [Op.gt]: 0
+        [Op.gt]: 5
       }
     } 
   });
@@ -498,7 +497,7 @@ const addRatings = async (session, idea) => {
     where: {
       'IdeaId': idea.id,
       'rating': {
-        [Op.lt]: 0
+        [Op.lt]: 6
       }
     } 
   });

@@ -104,6 +104,7 @@ class Idea extends Component {
         return res.json();
       })
       .then(json => {
+        console.log(json);
         this.setState({ comments: json });
       })
       .catch(error => {
@@ -418,16 +419,16 @@ class Idea extends Component {
             <div className="col-md">
               <div className="row">
                 {/* displaying the count of each vote underneath the star */}
-                <p id="rateVote">{this.state.votes["1"]}</p>
+                <p id="rateVote">{this.state.votes["6"]}</p>
+                <p id="rateVotes">{this.state.votes["7"]}</p>
+                <p id="rateVotes">{this.state.votes["8"]}</p>
+                <p id="rateVotes">{this.state.votes["9"]}</p>
+                <p id="rateMoreVotes">{this.state.votes["10"]}</p>
+                <p id="rateVotes">{this.state.votes["1"]}</p>
                 <p id="rateVotes">{this.state.votes["2"]}</p>
                 <p id="rateVotes">{this.state.votes["3"]}</p>
                 <p id="rateVotes">{this.state.votes["4"]}</p>
-                <p id="rateMoreVotes">{this.state.votes["5"]}</p>
-                <p id="rateVotes">{this.state.votes["-1"]}</p>
-                <p id="rateVotes">{this.state.votes["-2"]}</p>
-                <p id="rateVotes">{this.state.votes["-3"]}</p>
-                <p id="rateVotes">{this.state.votes["-4"]}</p>
-                <p id="rateVotes">{this.state.votes["-5"]}</p>
+                <p id="rateVotes">{this.state.votes["5"]}</p>
               </div>
             </div>
           </div>
@@ -578,17 +579,16 @@ class Idea extends Component {
                         type: "column",
                         dataPoints: [
                           // it is in random order because of the way it was inserted into the data array
-                          { label: "-5", y: parseInt(data[10].value) },
-                          { label: "-4", y: parseInt(data[9].value) },
-                          { label: "-3", y: parseInt(data[8].value) },
-                          { label: "-2", y: parseInt(data[7].value) },
-                          { label: "-1", y: parseInt(data[6].value) },
-                          { label: "0", y: parseInt(data[0].value) },
-                          { label: "1", y: parseInt(data[1].value) },
-                          { label: "2", y: parseInt(data[2].value) },
-                          { label: "3", y: parseInt(data[3].value) },
-                          { label: "4", y: parseInt(data[4].value) },
-                          { label: "5", y: parseInt(data[5].value) },
+                          { label: "1", y: parseInt(data[0].value), color: "red" },
+                          { label: "2", y: parseInt(data[1].value), color: "red" },
+                          { label: "3", y: parseInt(data[2].value), color: "red" },
+                          { label: "4", y: parseInt(data[3].value), color: "red" },
+                          { label: "5", y: parseInt(data[4].value), color: "red" },
+                          { label: "6", y: parseInt(data[5].value), color: "green" },
+                          { label: "7", y: parseInt(data[6].value), color: "green" },
+                          { label: "8", y: parseInt(data[7].value), color: "green" },
+                          { label: "9", y: parseInt(data[8].value), color: "green" },
+                          { label: "10", y: parseInt(data[9].value), color: "green" }
                         ]
                       }]
                     }}
