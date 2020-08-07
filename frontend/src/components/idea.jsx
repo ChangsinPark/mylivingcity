@@ -379,7 +379,7 @@ class Idea extends Component {
                 Positive Rating:
               </div>
               <Ratings
-                rating={Math.abs(this.state.posAvgRating)}
+                rating={Math.abs(this.state.posAvgRating - 5)}
                 widgetRatedColors="green"
                 widgetEmptyColors="grey"
               >
@@ -462,6 +462,18 @@ class Idea extends Component {
                     <Ratings.Widget />
                     <Ratings.Widget />
                   </Ratings>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <p id="firstRateVote">1</p>
+                  <p id="rateVotes">2</p>
+                  <p id="rateVotes">3</p>
+                  <p id="rateVotes">4</p>
+                  <p id="rateVotes">5</p>
+                  <p id="rateVotes">6</p>
+                  <p id="rateVotes">7</p>
+                  <p id="rateVotes">8</p>
+                  <p id="rateVotes">9</p>
+                  <p id="rateVotes">10</p>
                 </div>
                 <div className="d-flex justify-content-center">
                   <button onClick={(e) => this.addRating(e)} type="button" className="btn btn-light" disabled={this.state.userDidRate}>Submit Rating</button>

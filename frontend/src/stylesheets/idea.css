@@ -222,3 +222,8 @@ background-color: #FF6600
 #rateMoreVotes {
   padding-right: 118px;
 }
+
+#firstRateVote {
+  padding-left: 70px;
+  padding-right: 50px;
+}
