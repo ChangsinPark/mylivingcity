@@ -159,9 +159,9 @@ class Admin extends Component {
                             <thead>
                                 <tr>
                                     <th>Id</th>
+                                    <th>State</th>
                                     <th>Category</th>
                                     <th>Title</th>
-                                    <th>Description</th>
                                     <th>Average Rating</th>
                                     <th>Approval Ratio</th>
                                     <th>Required Approval Ratio</th>
@@ -174,9 +174,9 @@ class Admin extends Component {
                                     this.state.ratios[key] = parseFloat(value.idea.ratio).toFixed(2);
                                     return <tr key={index}>
                                         <td>{value.idea.id}</td>
+                                        <td>{value.idea.state}</td>
                                         <td>{value.idea.category || 'No Category'}</td>
                                         <td>{value.idea.title}</td>
-                                        <td>{value.idea.description}</td>
                                         <td>{parseFloat(value.rating.totalAverage).toFixed(2)}</td>
                                         <td>{parseFloat(value.rating.ratio).toFixed(2)}</td>
                                         <td>

@@ -120,12 +120,12 @@ render() {
             <form onSubmit={this.postIdea}>
                 <div className="form-group">
                     <p>Select Category: </p>
-                    <select name="category" className="form-control text-center" id="ideaCategoryInput" required>
-                      <option value="community_impact">Community</option>
-                      <option value="nature_impact">Nature</option>
-                      <option value="art_impact">Arts</option>
-                      <option value="energy_impact">Energy</option>
-                      <option value="manufacturing_impact">Manufacturing</option>
+                    <select onChange={this.handleChange} name="category" className="form-control text-center" id="ideaCategoryInput" required>
+                      <option value="Community">Community</option>
+                      <option value="Nature">Nature</option>
+                      <option value="Arts">Arts</option>
+                      <option value="Energy">Energy</option>
+                      <option value="Manufacturing">Manufacturing</option>
                     </select>
                 </div>
                 <div className="form-group">
