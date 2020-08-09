@@ -37,7 +37,8 @@ class Idea extends Component {
       posRating: 0,
       negRating: 0,
       rating: 0,
-      userDidRate: false
+      userDidRate: false,
+      stageTwo: false
     };
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -80,18 +81,10 @@ class Idea extends Component {
         this.setState({ posCount: json.positiveCount })
         this.setState({ negCount: json.negativeCount })
         this.setState({ ratio: json.rating.ratio })
-        var requiredRatio = this.state.idea.ratio;
-        var ratio = this.state.ratio;
-        var interactivity = this.state.interactivity;
-        var champ = document.getElementById('champ');
         var state = this.state.idea.state;
         var status = this.state.idea.status;
-    
-        if (state === 'idea' && status === 'confirmed' && ratio >= requiredRatio) {
-          champ.hidden = false;
-        } else {
-          champ.hidden = true;
-        }
+        var requiredRatio = this.state.idea.ratio;
+        this.setState({ stageTwo: state === 'idea' && status === 'confirmed' && this.state.averageRating >= requiredRatio })
       })
       .catch(error => {
         console.log("Error: " + error);
@@ -325,7 +318,7 @@ class Idea extends Component {
 
                     <form onSubmit={(e) => this.proposal(e)}>
                     <div id="champ">
-                      <button id="submitBtn" type="submit" className="btn btn-warning" data-toggle="modal" data-target="#championModal">Promote Idea</button>
+                      <button id="submitBtn" type="submit" className="btn btn-warning" data-toggle="modal" data-target="#championModal" disabled={!this.state.stageTwo}>Promote Idea</button>
                     </div>
                     </form>
 

@@ -43,6 +43,7 @@ const register = (req, res, next) => {
 //POST login route (optional, everyone has access)
 const login = (req, res, next) => {
   const { body: { user } } = req;
+
   if(!user.email) {
     return res.status(422).json({
       errors: {
@@ -50,6 +51,7 @@ const login = (req, res, next) => {
       },
     });
   }
+
   if(!user.password) {
     return res.status(422).json({
       errors: {
@@ -57,13 +59,14 @@ const login = (req, res, next) => {
       },
     });
   }
+
   return passport.authenticate('local', { session: true }, (err, passportUser, info) => {
     /*******DEBUG*********/
     console.log("Authenticating...");
     /********************/
 
     if(err) {
-      return res.status(400).send(err);
+      return next(err);
     }
 
     if(passportUser) {
@@ -76,7 +79,7 @@ const login = (req, res, next) => {
       console.log(req.session);
       //user.token = passportUser.generateJWT();
       req.session.user = user;
-      return res.send( {user: user.toAuthJSON() });
+      return res.send( {user: user});
       /*
       res.cookie('authToken', user.token, { 
         maxAge: 30 * 60 * 60 * 24 * 1000  // 30 days in ms

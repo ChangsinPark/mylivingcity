@@ -41,14 +41,14 @@ async login(e){
           sessionStorage.setItem('loggedin', true);
           sessionStorage.setItem('user', data.user.email);
           sessionStorage.setItem('userId', data.user.id);
-          sessionStorage.setItem('userRole', data.user.RoleId);
+          sessionStorage.setItem('userRole', data.user.Role.role_name);
           this.acceptLogin();
         }).catch(e => {
           console.log(e.stack);
           sessionStorage.setItem('loggedin', false);
           sessionStorage.setItem('user', data.user.email);
           sessionStorage.setItem('userId', data.user.id);
-          sessionStorage.setItem('userRole', data.user.RoleId);
+          sessionStorage.setItem('userRole', data.user.Role.role_name);
           this.rejectLogin();
         });
       }
