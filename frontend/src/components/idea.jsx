@@ -87,7 +87,7 @@ class Idea extends Component {
         var state = this.state.idea.state;
         var status = this.state.idea.status;
     
-        if (state === 'idea' && status === 'pending') {
+        if (state === 'idea' && status === 'confirmed' && ratio >= requiredRatio) {
           champ.hidden = false;
         } else {
           champ.hidden = true;
