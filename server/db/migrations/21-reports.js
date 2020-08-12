@@ -4,13 +4,6 @@ var Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize/lib/sequelize');
 const { STRING } = require('sequelize');
 
-var info = {
-    "revision": 21,
-    "name": "reports",
-    "created": "2020-07-16T16:11:30Z",
-    "comment": ""
-};
-
 var migrationCommands = [
     {
         fn: "createTable",

@@ -1,7 +1,4 @@
 'use strict';
-
-const { BelongsTo } = require("sequelize/lib/associations");
-
 module.exports = (sequelize, DataTypes) => {
   const Blog = sequelize.define('Blog', {
     id: { 
@@ -22,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   Blog.associate = function(models) {
     // Belongs-To associations
     Blog.belongsTo(models.User);
+
     // Belongs-To-Many associations
 
     // Has-One associations

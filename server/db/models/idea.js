@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'developer',
       foreignKey: 'developerId'
     });
-    Idea.belongsTo(models.Blog);
 
     // Belongs-To-Many associations
 
