@@ -33,8 +33,8 @@ var undoMigrationCommands = [
     {
         fn: "changeColumn",
         params: [
-            "Blogs",
-            "markdown",
+            "Ideas",
+            "ration",
             {
                 "type": Sequelize.FLOAT,
                 "field": "ratio",
